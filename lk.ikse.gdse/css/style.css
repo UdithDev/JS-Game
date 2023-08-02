@@ -1,13 +1,42 @@
 @import "normalize.css";
 @import url('https://fonts.googleapis.com/css2?family=Bungee+Spice&display=swap');
-*{
+
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: 'Bungee Spice', cursive;
 }
-.wrapper{
-    width: 400px;
+
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background: antiquewhite;
+}
+
+.wrapper {
+    width: 450px;
     height: 600px;
     background: wheat;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.game-score {
+    font-size: 20px;
+    font-weight: 500;
+    padding: 20px 27px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.play-board {
+    width: 100%;
+    height: 100%;
+    background: url("../resources/images/play_board_image.jpg");
+    display: grid;
+    grid-template: repeat(30,1fr) / repeat(30,1fr);
 }
