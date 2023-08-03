@@ -43,3 +43,6 @@ body {
 .play-board .food{
     background: greenyellow;
 }
+.play-board .head{
+    background: aqua;
+}
