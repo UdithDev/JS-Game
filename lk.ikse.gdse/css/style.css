@@ -40,3 +40,6 @@ body {
     display: grid;
     grid-template: repeat(30,1fr) / repeat(30,1fr);
 }
+.play-board .food{
+    background: greenyellow;
+}
