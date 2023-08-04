@@ -1,10 +1,17 @@
 const playBoard = document.querySelector(".play-board");
+const scoreBoard = document.querySelector(".score");
+const highScoreBoard = document.querySelector(".high-score");
 let foodX, foodY;
 let snakeBody = [];
 let snakeX = 5, snakeY = 10;
 let directionX = 0, directionY = 0;
 let gameOver = false;
 let setIntervalId;
+let score = 0;
+
+
+let highScore = localStorage.getItem("high-score") || 0;
+highScoreBoard.innerText=`high-score: ${highScore}`;
 
 const changeFood = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
@@ -48,7 +55,13 @@ const initGame = () => {
     if (snakeX === foodX && snakeY === foodY) {
         changeFood();
         snakeBody.push([foodX, foodY]); //pushing food position to snake body array
-        console.log(snakeBody);
+        score++;
+
+        highScore = score >= highScore ? score : highScore;
+        localStorage.setItem("high-score", highScore);
+        scoreBoard.innerText = `score: ${score}`;
+        highScoreBoard.innerText=`high-score: ${highScore}`;
+
     }
     for (let i = snakeBody.length - 1; i > 0; i--) {
         snakeBody[i] = snakeBody[i - 1];
@@ -69,8 +82,8 @@ const initGame = () => {
         //Adding a div for each part of the snake's body
         htmlMarkup += `<div class="head" style="grid-area: ${snakeBody[i][1]}/${snakeBody[i][0]}"></div>`;
 
-        if(i !==0  && snakeBody[0][1]=== snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]){
-            gameOver= true;
+        if (i !== 0 && snakeBody[0][1] === snakeBody[i][1] && snakeBody[0][0] === snakeBody[i][0]) {
+            gameOver = true;
         }
     }
     playBoard.innerHTML = htmlMarkup;
