@@ -1,8 +1,8 @@
 const playBoard = document.querySelector(".play-board");
 let foodX, foodY;
+let snakeBody = [];
 let snakeX = 5, snakeY = 10;
-let directionX=0;
-let directionY=0;
+let directionX = 0, directionY = 0;
 
 const changeFood = () => {
     foodX = Math.floor(Math.random() * 30) + 1;
@@ -10,7 +10,7 @@ const changeFood = () => {
 }
 
 const changeDirection = (e) => {
-    console.log(e);
+    /*  console.log(e);*/
 
     if (e.key === "ArrowUp") {
         directionX = 0;
@@ -32,15 +32,27 @@ const changeDirection = (e) => {
 const initGame = () => {
     let htmlMarkup = `<div class="food" style="grid-area: ${foodY}/${foodX}"></div>`;
 
-    if(snakeX===foodX && snakeY==foodY){
+    //Checking if the snake eat the good
+    if (snakeX === foodX && snakeY === foodY) {
         changeFood();
+        snakeBody.push([foodX, foodY]); //pushing food position to snake body array
+        console.log(snakeBody);
     }
-    snakeX +=directionX;
-    snakeY +=directionY;
+    for (let i =snakeBody.length-1; i>0; i--){
+        snakeBody[i] =snakeBody[i-1];
+    }
 
-    htmlMarkup += `<div class="head" style="grid-area: ${snakeY}/${snakeX}"></div>`;
+    snakeBody[0]=[snakeX,snakeY];  //setting first element of snake  body to current snake position
+
+    //Updating the snakes head position based on the current velocity
+    snakeX += directionX;
+    snakeY += directionY;
+
+    for (let i = 0; i < snakeBody.length; i++) {
+        htmlMarkup += `<div class="head" style="grid-area: ${snakeBody[i][1]}/${snakeBody[i][0]}"></div>`;
+    }
     playBoard.innerHTML = htmlMarkup;
 }
 changeFood();
-setInterval(initGame,125);
+setInterval(initGame, 125);
 document.addEventListener("keydown", changeDirection);
